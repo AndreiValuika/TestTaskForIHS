@@ -1,7 +1,15 @@
 #include "WordStatistics.h"
 #include <string>
 #include <iostream>
-
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/utility.hpp>
+#include <filesystem>
+#include <fstream>
 
 void WordStatistics::setTitle(string title)
 {
@@ -18,14 +26,23 @@ void WordStatistics::setSentAndOffset(vector<pair<int, int>> temp)
 	this->sentAndOffset = temp;
 }
 
+void WordStatistics::savetofile(ofstream &os,string)
+{
+	//std::ofstream os("c:\\Test\\te.bin",std::ios::app);
+	cereal::BinaryOutputArchive archive(os);
+	
+	archive(title, fileName, sentAndOffset);
+
+}
+
 string WordStatistics::getTitle()
 {
-	return string();
+	return title;
 }
 
 string WordStatistics::getFileName()
 {
-	return string();
+	return fileName;
 }
 
 vector<pair<int, int>> WordStatistics::getSentAndOffset()

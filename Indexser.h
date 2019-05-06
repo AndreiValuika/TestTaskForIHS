@@ -1,6 +1,5 @@
 #include <vector>
 #include <string>
-//#include <string>
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -8,12 +7,12 @@
 #include "Node.h"
 #include<Windows.h>
 #include "WordStatistics.h"
-//#include "Indexser.h"
 #pragma once
 class Indexser
 {
 private:
 	multimap < string, WordStatistics> general;
+	friend class cereal::access;
 public:
 	std::vector<std::string> getFileList(std::string path);
 	std::vector<std::string> getSentFromFile(std::string path);
@@ -22,6 +21,9 @@ public:
 	void parseFolder(string path);
 	void addWordStatistics(WordStatistics);
 	void showAll();
+	void saveToFile(string path);
+	//void saveToFile(string);
+	void loadFromFile();
 	Indexser();
 	~Indexser();
 };

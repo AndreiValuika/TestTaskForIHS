@@ -8,6 +8,13 @@
 #include<Windows.h>
 #include "WordStatistics.h"
 #include "Indexser.h"
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/vector.hpp>
+
 using namespace std;
 namespace fs = std::experimental::filesystem;
 
@@ -31,7 +38,7 @@ std::vector<std::string> Indexser::getSentFromFile(std::string path)
 	vector<std::string> sentList;
 
 	ifstream fin(path);
-	std::string temp;
+	string temp;
 	while (getline(fin, temp, '.'))
 	{
 		sentList.push_back(temp);
@@ -111,7 +118,6 @@ void Indexser::parseFolder(string path)
 {
 	vector<string> fileList = getFileList(path);
 	for (string s : fileList) parseFile(s);
-	showAll();
 }
 
 void Indexser::addWordStatistics(WordStatistics temp)
@@ -122,6 +128,19 @@ void Indexser::addWordStatistics(WordStatistics temp)
 void Indexser::showAll()
 {
 	for (auto n : general) n.second.showStatisticst();
+}
+
+void Indexser::saveToFile(string path)
+{
+	ofstream os("c:\\Test\\te1.bin");
+	for (auto n : general) n.second.savetofile(os , "g");
+	os.close();
+}
+
+void Indexser::loadFromFile()
+{
+	ifstream is("c:\\Test\\te1.bin");
+	
 }
 	
 	
