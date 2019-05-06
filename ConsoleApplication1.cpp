@@ -8,7 +8,7 @@ using namespace std;
 #include <fstream>
 #include <map>
 #include "Node.h"
-#include<Windows.h>
+//#include<Windows.h>
 #include "WordStatistics.h"
 #include "Indexser.h"
 
