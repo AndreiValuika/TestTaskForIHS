@@ -12,18 +12,23 @@ class Indexser
 {
 private:
 	multimap < string, WordStatistics> general;
+	
 	friend class cereal::access;
+	template<class Archive>
+	void serialize(Archive& archive)
+	{
+		archive(general); 
+	}
 public:
-	std::vector<std::string> getFileList(std::string path);
-	std::vector<std::string> getSentFromFile(std::string path);
-	map<string,vector<int>> parseSent(std::string line);
+	vector<string> getFileList(string path);
+	vector<string> getSentFromFile(string path);
+	map<string,vector<int>> parseSent(string line);
 	map<string,WordStatistics> parseFile(string path);
 	void parseFolder(string path);
 	void addWordStatistics(WordStatistics);
 	void showAll();
 	void saveToFile(string path);
-	//void saveToFile(string);
-	void loadFromFile();
+	void loadFromFile(string path);
 	Indexser();
 	~Indexser();
 };

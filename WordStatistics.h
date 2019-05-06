@@ -16,7 +16,14 @@ private:
 	string title;
 	string fileName;
 	vector<pair<int, int>> sentAndOffset;
+	
+
 	friend class cereal::access;
+	template<class Archive>
+	void serialize(Archive& archive)
+	{
+		archive(title, fileName, sentAndOffset); // serialize things by passing them to the archive
+	}
 public:
 	void setTitle(string);
 	void setFileName(string);

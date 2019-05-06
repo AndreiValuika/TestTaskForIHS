@@ -30,8 +30,8 @@ void WordStatistics::savetofile(ofstream &os,string)
 {
 	//std::ofstream os("c:\\Test\\te.bin",std::ios::app);
 	cereal::BinaryOutputArchive archive(os);
-	
-	archive(title, fileName, sentAndOffset);
+	WordStatistics temp = WordStatistics();
+	archive(temp);
 
 }
 

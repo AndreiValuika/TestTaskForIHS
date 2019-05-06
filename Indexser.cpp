@@ -10,11 +10,10 @@
 #include "Indexser.h"
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/portable_binary.hpp>
-#include <cereal/archives/xml.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
-
+#include <cereal/types/utility.hpp>
 using namespace std;
 namespace fs = std::experimental::filesystem;
 
@@ -55,7 +54,7 @@ map <string,vector<int>> Indexser::parseSent(std::string line)
 	char* buf;
 	map<string,vector<int>> tempMap;
 	vector<int> tempVector;
-	buf = strtok_s(cstr, " .,!?", &index);
+	buf =strtok_s(cstr, " .,!?", &index);
 	while (buf)
 	{
 		if (buf != NULL)
@@ -109,7 +108,6 @@ map <string,WordStatistics> Indexser::parseFile(string path)
 		}
 		sent++;
 	} 
-	std::cout << std::endl;
 	for (auto & n : tempVector) this->addWordStatistics(n.second);
 	return tempVector;
 }
@@ -132,15 +130,16 @@ void Indexser::showAll()
 
 void Indexser::saveToFile(string path)
 {
-	ofstream os("c:\\Test\\te1.bin");
-	for (auto n : general) n.second.savetofile(os , "g");
-	os.close();
+	ofstream os(path);
+	cereal::PortableBinaryOutputArchive archive(os);
+	archive(general);
 }
 
-void Indexser::loadFromFile()
+void Indexser::loadFromFile(string path)
 {
-	ifstream is("c:\\Test\\te1.bin");
-	
+	ifstream is(path);
+	cereal::PortableBinaryInputArchive archive(is);
+	archive(general);
 }
 	
 	
