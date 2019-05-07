@@ -38,7 +38,6 @@ public:
 
 	WordStatistics();
 	WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset);
-	WordStatistics(string, string, pair<int, int>);
 	~WordStatistics();
 };
 

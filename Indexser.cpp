@@ -35,12 +35,22 @@ std::vector<std::string> Indexser::getFileList(std::string path)
 std::vector<std::string> Indexser::getSentFromFile(std::string path)
 {
 	vector<std::string> sentList;
-
 	ifstream fin(path);
-	string temp;
-	while (getline(fin, temp, '.'))
+	string str;
+	
+	while (getline(fin, str, '.'))
 	{
-		sentList.push_back(temp);
+		int wchlen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.size(), NULL, 0);
+		if (wchlen > 0 && wchlen != 0xFFFD)
+		{
+			std::vector<wchar_t> wbuf(wchlen);
+			MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.size(), &wbuf[0], wchlen);
+			std::vector<char> buf(wchlen);
+			WideCharToMultiByte(1251, 0, &wbuf[0], wchlen, &buf[0], wchlen, 0, 0);
+
+			str=string(&buf[0], wchlen);
+		}
+		sentList.push_back(str);
 	}
 	fin.close();
 	return sentList;
@@ -54,7 +64,18 @@ map <string,vector<int>> Indexser::parseSent(std::string line)
 	char* buf;
 	map<string,vector<int>> tempMap;
 	vector<int> tempVector;
+	
+	
+	
+	
 	buf =strtok_s(cstr, " .,!?", &index);
+	
+	
+	
+	
+	
+	
+	
 	while (buf)
 	{
 		if (buf != NULL)

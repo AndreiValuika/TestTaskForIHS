@@ -28,7 +28,6 @@ void WordStatistics::setSentAndOffset(vector<pair<int, int>> temp)
 
 void WordStatistics::savetofile(ofstream &os,string)
 {
-	//std::ofstream os("c:\\Test\\te.bin",std::ios::app);
 	cereal::BinaryOutputArchive archive(os);
 	WordStatistics temp = WordStatistics();
 	archive(temp);
