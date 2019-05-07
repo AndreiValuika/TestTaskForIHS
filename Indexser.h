@@ -24,6 +24,7 @@ public:
 	vector<string> getSentFromFile(string path);
 	map<string,vector<int>> parseSent(string line);
 	map<string,WordStatistics> parseFile(string path);
+	void searchWord(string word);
 	void parseFolder(string path);
 	void addWordStatistics(WordStatistics);
 	void showAll();
