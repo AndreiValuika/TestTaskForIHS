@@ -1,7 +1,15 @@
 #include "WordStatistics.h"
 #include <string>
 #include <iostream>
-
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/utility.hpp>
+#include <filesystem>
+#include <fstream>
 
 void WordStatistics::setTitle(string title)
 {
@@ -18,14 +26,22 @@ void WordStatistics::setSentAndOffset(vector<pair<int, int>> temp)
 	this->sentAndOffset = temp;
 }
 
+void WordStatistics::savetofile(ofstream &os,string)
+{
+	cereal::BinaryOutputArchive archive(os);
+	WordStatistics temp = WordStatistics();
+	archive(temp);
+
+}
+
 string WordStatistics::getTitle()
 {
-	return string();
+	return title;
 }
 
 string WordStatistics::getFileName()
 {
-	return string();
+	return fileName;
 }
 
 vector<pair<int, int>> WordStatistics::getSentAndOffset()
@@ -35,13 +51,16 @@ vector<pair<int, int>> WordStatistics::getSentAndOffset()
 
 void WordStatistics::showStatisticst()
 {
-	cout << "Word: \"" << title << "\" : {file:\"" << fileName << "\",(";
-	for(auto n : sentAndOffset) 
-	{
-		cout << "(Sent#" << n.first << " ,offset=" << n.second << ")" ;
-
-	}
+	char* tr;
+	//ofstream fo("c:\\Test\\test77.txt",ios::out);
+	cout<< "Word: \""<< title << "\" : {file:\"" << fileName << "\",(";
+	if (sentAndOffset.size()>1)
+		for(auto n : sentAndOffset) 	
+			cout << "(Sent# " << n.first << ",offset=" << n.second << ")" ;
+	else 
+		cout << "Sent#" <<sentAndOffset.front().first << " ,offset=" << sentAndOffset.front().second;
 	cout << ")}" << endl;
+	//fo.close();
 }
 
 
