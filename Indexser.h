@@ -11,9 +11,11 @@
 class Indexser
 {
 private:
-	multimap < string, WordStatistics> general;
+	vector<WordStatistics> general;
 	
+	friend class Searcher;
 	friend class cereal::access;
+	
 	template<class Archive>
 	void serialize(Archive& archive)
 	{

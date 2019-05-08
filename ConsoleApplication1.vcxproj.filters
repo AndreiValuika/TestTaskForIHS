@@ -24,12 +24,18 @@
     <ClCompile Include="Main_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Searcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WordStatistics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Indexser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Searcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

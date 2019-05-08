@@ -69,12 +69,12 @@ WordStatistics::WordStatistics()
 {
 }
 
-WordStatistics::WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset)
-{
-	this->title = title;
-	this->fileName = fileName;
-	this->sentAndOffset=sentAndOffset;
-}
+//WordStatistics::WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset)
+//{
+//	this->title = title;
+//	this->fileName = fileName;
+//	this->sentAndOffset=sentAndOffset;
+//}
 
 
 WordStatistics::~WordStatistics()

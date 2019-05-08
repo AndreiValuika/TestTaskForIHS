@@ -146,11 +146,11 @@ map <string,WordStatistics> Indexser::parseFile(string path)
 
 void Indexser::searchWord(string word)
 {
-	std::pair <std::multimap<string, WordStatistics>::iterator, std::multimap<string, WordStatistics>::iterator> ret;
+	/*std::pair <std::multimap<string, WordStatistics>::iterator, std::multimap<string, WordStatistics>::iterator> ret;
 	ret = general.equal_range(word);
 	for (std::multimap<string, WordStatistics>::iterator it = ret.first; it != ret.second; ++it)
 		 it->second.showStatisticst();
-	std::cout << '\n';
+	std::cout << '\n';*/
 }
 
 void Indexser::parseFolder(string path)
@@ -161,12 +161,12 @@ void Indexser::parseFolder(string path)
 
 void Indexser::addWordStatistics(WordStatistics temp)
 {
-	general.insert(make_pair(temp.getTitle(),temp));
+	general.push_back(temp);
 }
 
 void Indexser::showAll()
 {
-	for (auto n : general) n.second.showStatisticst();
+	for (auto n : general) n.showStatisticst();
 }
 
 void Indexser::saveToFile(string path)

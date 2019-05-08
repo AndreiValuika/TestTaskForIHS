@@ -7,6 +7,7 @@ using namespace std;
 #include "WordStatistics.h"
 #include "Indexser.h"
 #include <regex>
+#include "Searcher.h"
 template<typename CharT>
 basic_string<CharT> replaceString(const CharT* find, const CharT* str, const CharT* repl)
 {
@@ -23,12 +24,15 @@ int main()
 	//ind.parseFolder("c:\\Test");
 	DWORD start = GetTickCount();
 	ind.parseFolder("c:\\Test");
-	ind.showAll();
-
+	//ind.showAll();
+	ind.saveToFile("c:\\Test\\t277.bin");
+	ind1.loadFromFile("c:\\Test\\t277.bin");
+	Searcher sr = Indexser(ind1);
+	//ind1.showAll();
+	cout << sr.findWord("Minsk");
 	
-	
-	ind.saveToFile("c:\\Test\\t25.xml");
-	
+	ind.saveToFile("c:\\Test\\t277.bin");
+	cout << "-----------------------------";
 	
 	//ind.searchWord("Minsk");
 	DWORD end = GetTickCount();

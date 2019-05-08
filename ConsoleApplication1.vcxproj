@@ -157,10 +157,12 @@
   <ItemGroup>
     <ClCompile Include="Main_Test.cpp" />
     <ClCompile Include="Indexser.cpp" />
+    <ClCompile Include="Searcher.cpp" />
     <ClCompile Include="WordStatistics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Indexser.h" />
+    <ClInclude Include="Searcher.h" />
     <ClInclude Include="WordStatistics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
