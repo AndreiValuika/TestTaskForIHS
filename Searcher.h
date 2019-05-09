@@ -12,7 +12,7 @@ public:
 	string findWord(string word);
 	Searcher();
 
-	Searcher(Indexser);
+	Searcher( Indexser&);
 	~Searcher();
 };
 
