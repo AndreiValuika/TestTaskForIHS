@@ -8,8 +8,6 @@
 #include<Windows.h>
 #include "WordStatistics.h"
 #include "Indexser.h"
-#include <cereal/archives/binary.hpp>
-#include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/map.hpp>
@@ -36,7 +34,6 @@ std::vector<std::string> Indexser::getFileList(std::string path)
 
 std::vector<std::string> Indexser::getSentFromFile(const string& path)
 {
-	cout << path;
 	vector<std::string> sentList;
 	ifstream fin(path);
 	string str;
@@ -71,7 +68,6 @@ std::vector<std::string> Indexser::getSentFromFile(const string& path)
 
 map <string,vector<int>> Indexser::parseSent(std::string line)
 {
-	DWORD start = GetTickCount();
 	int  offset=0;
 	map<string,vector<int>> tempMap;
 	vector<int> tempVector;
@@ -98,10 +94,11 @@ map <string,vector<int>> Indexser::parseSent(std::string line)
 	return tempMap;
 }
 
-void Indexser::parseFile(string path)
+void Indexser::parseFile(string path,ostream& stream)
 {
 	string word;
 	string fileName = path.substr(path.find_last_of('\\'), path.npos).erase(0,1);
+	stream << "\nFile \"" << fileName << "\"\n";
 	map<string,WordStatistics> tempVector;
 	WordStatistics tempWord;
 	vector<pair<int, int>> temp,temp1;
@@ -110,6 +107,7 @@ void Indexser::parseFile(string path)
 	int sent = 0;
 	for (auto n = sentList.begin(); n != sentList.end(); ++n)
 	{
+		stream << "Sent#" << sent << "--" << *n << endl;
 		map<string, vector<int>> sentWordIndex = parseSent(*n);
 		for (auto it = sentWordIndex.begin(); it != sentWordIndex.end(); ++it)
 		{
@@ -131,13 +129,17 @@ void Indexser::parseFile(string path)
 		}
 		sent++;
 	} 
-	for (auto & n : tempVector) this->addWordStatistics(n.second);
+	for (auto& n : tempVector)
+	{
+		this->addWordStatistics(n.second);
+		n.second.showStatisticst(stream);
+	}
 }
 
-void Indexser::parseFolder(string path)
+void Indexser::parseFolder(string path,ostream& stream)
 {
 	vector<string> fileList = getFileList(path);
-	for (string s : fileList) parseFile(s);
+	for (string s : fileList) parseFile(s,stream);
 }
 
 void Indexser::addWordStatistics(WordStatistics temp)

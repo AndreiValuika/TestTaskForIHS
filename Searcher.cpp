@@ -10,7 +10,7 @@ string Searcher::findWord(string word)
 	ret = body.equal_range(word);
 	if (ret.first==ret.second)
 	{
-		ss<<"Not found;";
+		ss<<"\tNot found;";
 	}
 	else
 	{

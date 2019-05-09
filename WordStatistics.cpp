@@ -52,13 +52,13 @@ vector<pair<int, int>> WordStatistics::getSentAndOffset()
 void WordStatistics::showStatisticst(ostream& stream)
 {
 	char* tr;
-	cout<< "Word: \""<< title << "\" : {file:\"" << fileName << "\",(";
+	stream<< "Word: \""<< title << "\" : {file:\"" << fileName << "\",(";
 	if (sentAndOffset.size()>1)
 		for(auto n : sentAndOffset) 	
-			cout << "(Sent# " << n.first << ",offset=" << n.second << ")" ;
+			stream << "(Sent# " << n.first << ",offset=" << n.second << ")" ;
 	else 
-		cout << "Sent#" <<sentAndOffset.front().first << " ,offset=" << sentAndOffset.front().second;
-	cout << ")}" << endl;
+		stream << "Sent#" <<sentAndOffset.front().first << " ,offset=" << sentAndOffset.front().second;
+	stream << ")}" << endl;
 }
 
 
