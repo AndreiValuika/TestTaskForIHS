@@ -8,19 +8,12 @@ string Searcher::findWord(string word)
 	ss<< " - Word\""<< word << "\"\n";
 	std::pair <std::multimap<string, WordStatistics>::iterator, std::multimap<string, WordStatistics>::iterator> ret;
 	ret = body.equal_range(word);
-	if (ret.first==ret.second)
+	for (std::multimap<string, WordStatistics>::iterator it = ret.first; it != ret.second; ++it) 
 	{
-		ss<<"Not found;";
-	}
-	else
-	{
-		for (std::multimap<string, WordStatistics>::iterator it = ret.first; it != ret.second; ++it)
+		ss<< "\tFile \""+it->second.getFileName()+"\"\n\t";
+		for (auto & n : it->second.getSentAndOffset()) 
 		{
-			ss << "\n\tFile \"" + it->second.getFileName() + "\"\n";
-			for (auto& n : it->second.getSentAndOffset())
-			{
-				ss << "\t\t(Sent# " << n.first << ",offset = " << n.second << ")\n";
-			}
+			ss<<"(Sent# " <<n.first<< ",offset = "<< n.second<< ")\n";
 		}
 	}
 	return ss.str();

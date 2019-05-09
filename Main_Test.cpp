@@ -33,21 +33,27 @@ int main()
 	
 	setlocale(LC_ALL, "");
 	Indexser ind,ind1 = Indexser();
-	
-	
-	ind.parseFolder("c:\\Test");//"c:\\Test");E:\C++\Test\test3\TestTaskForIHS\TestFolder
-	ind.showAll(std::cout);
-	
-	cout << "1" << endl;
-	ind.saveToFile("c:\\Test\\test.xml");
-	cout << "2" << endl;
-	ind1.loadFromFile("c:\\Test\\test.xml");
-	ind1.showAll(std::cout);
+	//ind.parseFolder("c:\\Test");
 	DWORD start = GetTickCount();
-	Searcher sch = Searcher(ind1);
-	cout << sch.findWord("Minsk");
-	DWORD end = GetTickCount();
-	cout << endl << (unsigned int)(end - start)/10 << endl;
+	ind.parseFolder("c:\\Test");
+	//ind.showAll();
+	ind.saveToFile("c:\\Test\\t277.bin");
+	ind1.loadFromFile("c:\\Test\\t277.bin");
+	Searcher sr = Indexser(ind1);
+	//ind1.showAll();
+	cout << sr.findWord("Minsk");
+	cout << "***************" << endl;
+	cout << sr.findWord("Minskghj");
+	cout << "***************" << endl;
+	*/
+	ind->loadFromFile("c:\\Test\\t277.bin");
 	
-	system("pause");
+	ind.saveToFile("c:\\Test\\t277.bin");
+	cout << "-----------------------------";
+	
+	//ind.searchWord("Minsk");
+	DWORD end = GetTickCount();
+	cout << endl << (unsigned int)(end - start) << endl;
+	int i;
+	//cin >> i;
 }
