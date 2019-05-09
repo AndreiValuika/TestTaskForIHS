@@ -35,7 +35,9 @@ public:
 	vector<string> getFileList(string path);
 	vector<string> getSentFromFile(const string& path);
 	map<string,vector<int>> parseSent(string line);
+	void parseFile(string path, ostream& stream);
 	void parseFile(string path);
+	void parseFolder(string path, ostream& stream);
 	void parseFolder(string path);
 	void addWordStatistics(WordStatistics);
 	void showAll(ostream&);

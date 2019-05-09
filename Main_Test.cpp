@@ -34,20 +34,20 @@ int main()
 	setlocale(LC_ALL, "");
 	Indexser ind,ind1 = Indexser();
 	
+	ofstream fout("c:\\Test\\SentIndex.txt");
+	ind.parseFolder("c:\\Test",fout);
+	fout.close();
+	ind.showAll(cout);
 	
-	ind.parseFolder("c:\\Test");//"c:\\Test");E:\C++\Test\test3\TestTaskForIHS\TestFolder
-	ind.showAll(std::cout);
-	
-	cout << "1" << endl;
 	ind.saveToFile("c:\\Test\\test.xml");
-	cout << "2" << endl;
 	ind1.loadFromFile("c:\\Test\\test.xml");
-	ind1.showAll(std::cout);
+	ind1.showAll(cout);
 	DWORD start = GetTickCount();
 	Searcher sch = Searcher(ind1);
 	cout << sch.findWord("Minsk");
+	cout << sch.findWord("Minsk1");
 	DWORD end = GetTickCount();
-	cout << endl << (unsigned int)(end - start)/10 << endl;
+	cout << endl << (unsigned int)(end - start) << endl;
 	
 	system("pause");
 }
