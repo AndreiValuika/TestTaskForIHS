@@ -7,6 +7,7 @@
 #include <cereal/types/string.hpp>
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
+#include <cereal/types/utility.hpp>
 
 using namespace std;
 #pragma once
@@ -28,16 +29,14 @@ public:
 	void setTitle(string);
 	void setFileName(string);
 	void setSentAndOffset(vector<pair<int, int>>);
-	void savetofile(ofstream& os, string);
 	
 	string getTitle();
 	string getFileName();
 	vector<pair<int, int>> getSentAndOffset();
 	
-	void showStatisticst();
+	void showStatisticst(ostream&);
 
 	WordStatistics();
-	//WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset);
 	~WordStatistics();
 };
 
