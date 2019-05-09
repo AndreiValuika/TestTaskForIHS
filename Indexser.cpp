@@ -10,6 +10,7 @@
 #include "Indexser.h"
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
@@ -33,9 +34,8 @@ std::vector<std::string> Indexser::getFileList(std::string path)
 	return fileList;
 }
 
-std::vector<std::string> Indexser::getSentFromFile(std::string path)
+std::vector<std::string> Indexser::getSentFromFile(const string& path)
 {
-	DWORD start = GetTickCount();
 	cout << path;
 	vector<std::string> sentList;
 	ifstream fin(path);
@@ -56,25 +56,22 @@ std::vector<std::string> Indexser::getSentFromFile(std::string path)
 				MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.size(), &wbuf[0], wchlen);
 				std::vector<char> buf(wchlen);
 				WideCharToMultiByte(1251, 0, &wbuf[0], wchlen, &buf[0], wchlen, 0, 0);
-
+				
 				str = string(&buf[0], wchlen);
 				sentList.push_back(str);
-				b++;
 				str.clear();
 			}
 		}
 	}
 
 	fin.close();
-	DWORD end = GetTickCount();
-	cout << endl << (unsigned int)(end - start) << endl<<"sent="<<b<<endl;
+	
 	return sentList;
 }
 
 map <string,vector<int>> Indexser::parseSent(std::string line)
 {
 	DWORD start = GetTickCount();
-	cout << line<<'+';
 	int  offset=0;
 	map<string,vector<int>> tempMap;
 	vector<int> tempVector;
@@ -98,12 +95,10 @@ map <string,vector<int>> Indexser::parseSent(std::string line)
 		tempVector.push_back(offset++);
 		tempMap.insert_or_assign(*token++, tempVector);
 	}
-	DWORD end = GetTickCount();
-	cout << endl << "time parse sent:="<<(unsigned int)(end - start) << endl;
 	return tempMap;
 }
 
-map <string,WordStatistics> Indexser::parseFile(string path)
+void Indexser::parseFile(string path)
 {
 	string word;
 	string fileName = path.substr(path.find_last_of('\\'), path.npos).erase(0,1);
@@ -116,7 +111,6 @@ map <string,WordStatistics> Indexser::parseFile(string path)
 	for (auto n = sentList.begin(); n != sentList.end(); ++n)
 	{
 		map<string, vector<int>> sentWordIndex = parseSent(*n);
-		DWORD start = GetTickCount();
 		for (auto it = sentWordIndex.begin(); it != sentWordIndex.end(); ++it)
 		{
 			temp.clear();
@@ -134,23 +128,10 @@ map <string,WordStatistics> Indexser::parseFile(string path)
 				tempWord.setSentAndOffset(temp1);
 			}
 			tempVector.insert_or_assign(word, tempWord);
-
 		}
 		sent++;
-		DWORD end = GetTickCount();
-		cout << endl<<"time input:=" << (unsigned int)(end - start) << endl;
 	} 
 	for (auto & n : tempVector) this->addWordStatistics(n.second);
-	return tempVector;
-}
-
-void Indexser::searchWord(string word)
-{
-	std::pair <std::multimap<string, WordStatistics>::iterator, std::multimap<string, WordStatistics>::iterator> ret;
-	ret = general.equal_range(word);
-	for (std::multimap<string, WordStatistics>::iterator it = ret.first; it != ret.second; ++it)
-		 it->second.showStatisticst();
-	std::cout << '\n';
 }
 
 void Indexser::parseFolder(string path)
@@ -161,12 +142,12 @@ void Indexser::parseFolder(string path)
 
 void Indexser::addWordStatistics(WordStatistics temp)
 {
-	general.insert(make_pair(temp.getTitle(),temp));
+	general.push_back(temp);
 }
 
-void Indexser::showAll()
+void Indexser::showAll(ostream& stream )
 {
-	for (auto n : general) n.second.showStatisticst();
+	for (auto n : general) n.showStatisticst(stream);
 }
 
 void Indexser::saveToFile(string path)

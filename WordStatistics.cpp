@@ -26,13 +26,13 @@ void WordStatistics::setSentAndOffset(vector<pair<int, int>> temp)
 	this->sentAndOffset = temp;
 }
 
-void WordStatistics::savetofile(ofstream &os,string)
-{
-	cereal::BinaryOutputArchive archive(os);
-	WordStatistics temp = WordStatistics();
-	archive(temp);
+//void WordStatistics::savetofile(ofstream &os,string)
+//{
+//	cereal::BinaryOutputArchive archive(os);
+//	WordStatistics temp = WordStatistics();
+//	archive(temp);
 
-}
+//}
 
 string WordStatistics::getTitle()
 {
@@ -49,10 +49,9 @@ vector<pair<int, int>> WordStatistics::getSentAndOffset()
 	return this->sentAndOffset;
 }
 
-void WordStatistics::showStatisticst()
+void WordStatistics::showStatisticst(ostream& stream)
 {
 	char* tr;
-	//ofstream fo("c:\\Test\\test77.txt",ios::out);
 	cout<< "Word: \""<< title << "\" : {file:\"" << fileName << "\",(";
 	if (sentAndOffset.size()>1)
 		for(auto n : sentAndOffset) 	
@@ -60,7 +59,6 @@ void WordStatistics::showStatisticst()
 	else 
 		cout << "Sent#" <<sentAndOffset.front().first << " ,offset=" << sentAndOffset.front().second;
 	cout << ")}" << endl;
-	//fo.close();
 }
 
 
@@ -69,12 +67,12 @@ WordStatistics::WordStatistics()
 {
 }
 
-WordStatistics::WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset)
-{
-	this->title = title;
-	this->fileName = fileName;
-	this->sentAndOffset=sentAndOffset;
-}
+//WordStatistics::WordStatistics(string title, string fileName, vector<pair<int, int>> sentAndOffset)
+//{
+//	this->title = title;
+//	this->fileName = fileName;
+//	this->sentAndOffset=sentAndOffset;
+//}
 
 
 WordStatistics::~WordStatistics()
